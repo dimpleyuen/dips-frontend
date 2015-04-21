@@ -29,7 +29,23 @@ $(document).ready(function() {
   })
 
   $(document).on('click', '.signup-button', function() {
-    signUp();
+    signUp(function(response){
+      if (response.message === true) {
+        //if signup is successful, run the loginUser function
+        loginUser( $('.signup-username').val(), $('.signup-password').val(), function(response){
+          if (response.message === true) {
+            checkAuth();
+            history.pushState({foo: "bar"}, "", "/");
+          }
+          else {
+            alert(response.message);
+          }
+        });
+      }
+      else {
+        alert(response.message);
+      }
+    });
   })
 
 // function checkAuth() || get request to /authenticated
@@ -93,7 +109,7 @@ $(document).ready(function() {
   }
 
 // function signUp() || post request to /users
-  function signUp() {
+  function signUp(callback) {
     $.ajax({
       type: "POST",
       url: 'http://localhost:3000/users',
@@ -107,19 +123,13 @@ $(document).ready(function() {
       dataType: "JSON",
       success: function(response) {
         if (response.message) {
-          return alert("User Exists");
+          return callback({
+            "message" : "User Exists"
+          });
         }
         else {
-          alert("Sign Up Successful!");
-          // when sign up is successful, run loginUser() function
-          loginUser( $('.signup-username').val(), $('.signup-password').val(), function(response){
-            if (response.message === true) {
-              checkAuth();
-              history.pushState({foo: "bar"}, "", "/");
-            }
-            else {
-              alert(response.message);
-            }
+          return callback({
+            "message" : true
           });
         }
       }
