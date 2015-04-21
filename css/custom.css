@@ -1,0 +1,136 @@
+/************** Background Image **************/
+
+html, body, .container-fluid {
+  padding: 0;
+  height: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+body::after {
+  content: "";
+  background: url("../images/index-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  opacity: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+/************** Index Page **************/
+
+.index-page {
+  display: none;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50%;
+  width: 100%;
+  background-color: rgba(255,255,255,0.5);
+  font-family: 'Old Standard TT', serif;
+}
+
+.index-blurb {
+  float: right;
+  display: inline-block;
+  width: 400px;
+  height: 75%;
+  padding: 10px 20px;
+  margin-right: 20%;
+  border-right: 1px solid #555555;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.arrow {
+  font-size: 10px;
+  vertical-align: middle;
+}
+
+.index-logo {
+  float: right;
+  width: 169px;
+  height: 50%;
+  border-right: 1px solid #555555;
+  padding: 0 20px;
+  display: inline-block;
+  font-size: 50px;
+  color: #888888;
+}
+
+@media (max-width: 740px) {
+  .index-blurb {
+    position: absolute;
+    height: auto;
+    top: 80px;
+    width: 80%;
+    border: none;
+    font-size: 17px;
+  }
+
+  .index-logo {
+    margin-right: 20%;
+    height: 75%;
+  }
+
+}
+
+/************** Login/SignUp Modal **************/
+
+
+.modalDialogLogin h3, .modalDialogSignup h3 {
+  margin-top: 0;
+}
+
+.modalDialogLogin, .modalDialogSignup {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99999;
+  opacity:0;
+  -webkit-transition: opacity 400ms ease-in;
+  pointer-events: none;
+}
+
+.modalDialogLogin:target, .modalDialogSignup:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalDialogLogin > div, .modalDialogSignup > div {
+  font-family: 'Lato', sans-serif;
+  text-align: left;
+  width: 85%;
+  max-width: 600px;
+  position: relative;
+  margin: 235px auto;
+  padding: 20px 20px 20px 20px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.8);
+}
+
+
+.close {
+  background: #606061;
+  color: #FFFFFF;
+  padding: 3px;
+  position: absolute;
+  text-align: center;
+  right: -12px;
+  top: -10px;
+  width: 30px;
+  border-radius: 12px;
+  box-shadow: 1px 1px 3px #000;
+  opacity: 1;
+}
+
+.close:hover { 
+  background: white;
+  opacity: 1;
+}
