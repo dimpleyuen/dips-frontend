@@ -18,17 +18,19 @@
   
     <div class="container-fluid">
     <!-- INDEX PAGE -->
-      <div class="index-page">
-        <div class="index-blurb">
-          <p>With every dive comes new memories - record your scuba adventures with DIPS and open yourself to an infinite stream of new possibilities.</p>
-          <div class="login-menu">
-            <span class="arrow">>></span><a class="login-link" href="#openModalLogin"> Login</a>
-            <br>
-            <span class="arrow">>></span><a class="signup-link" href="#openModalSignup"> Sign Up</a>
+      <div class="index-bg">
+        <div class="index-page">
+          <div class="index-blurb">
+            <p>With every dive comes new memories - record your scuba adventures with DIPS and open yourself to an infinite stream of new possibilities.</p>
+            <div class="login-menu">
+              <span class="arrow">>> </span><a class="login-link" href="#openModalLogin">Login</a>
+              <br>
+              <span class="arrow">>> </span><a class="signup-link" href="#openModalSignup">Sign Up</a>
+            </div>
           </div>
-        </div>
-        <div class="index-logo">
-          <p>DIPS</p>
+          <div class="index-logo">
+            <p>SCUBADIPS</p>
+          </div>
         </div>
       </div>
 
@@ -72,27 +74,44 @@
           <br>
           <input type="checkbox"> REMEMBER ME | <a href="#">Forgot Password?</a>
           </div>
-        </div>  
-      
-      </div>
+        </div> 
+
+    <!-- USER PAGE  -->
+      <div class="user-page">
+        <!-- HEADER -->
+        <div class="main-header">
+          <!-- TITLE -->
+          <p class="header-title">SCUBA<span class="dips">DIPS</p>
+          <!-- MENU -->
+          <span class="menu">
+            <span class="menu-expanded">
+              <ul>
+                <li><a href="#" class="account-link">Profile</a></li>
+                <li><a href="#" class="my-logs">My Logs</a></li>
+                <li><a href="#" class="new-log">New Log</a></li>
+                <li><a href="#" class="log-out">Log Out</a></li>
+              </ul>
+            </span>
+            <span class="dropdown">
+              <span class="dropdown-toggle" data-toggle="dropdown">
+                <a href="#"><i class="fa fa-bars fa-2x"></i></a>
+              </span>
+              <ul class="dropdown-menu dropdown-menu-right menu-collapse" role="menu">
+                <li>PROFILE</li>
+                <li>MY LOGS</li>
+                <li>NEW LOG</li>
+                <li>LOG OUT</li>
+              </ul>
+            </span>
+          </span>
+        </div>
+
+        <div class="container logs-wrapper">
+          <h2 class="mylogs-title text-uppercase">My <span>Logs</span></h2>
+          <div class="row logs-container">
+          </div>
+        </div>
     </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

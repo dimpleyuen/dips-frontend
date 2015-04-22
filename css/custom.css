@@ -6,23 +6,16 @@ html, body, .container-fluid {
   font-family: 'Lato', sans-serif;
 }
 
-body::after {
-  content: "";
+.index-bg {
+  display: none;
   background: url("../images/index-bg.jpg") no-repeat center center fixed;
   background-size: cover;
-  opacity: 1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;   
+  height: 100%;
 }
 
 /************** Index Page **************/
 
 .index-page {
-  display: none;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -35,12 +28,12 @@ body::after {
 .index-blurb {
   float: right;
   display: inline-block;
-  width: 400px;
+  width: 340px;
   height: 75%;
-  padding: 10px 20px;
+  padding: 10px 15px;
   margin-right: 20%;
   border-right: 1px solid #555555;
-  font-size: 20px;
+  font-size: 18px;
   vertical-align: middle;
 }
 
@@ -51,16 +44,16 @@ body::after {
 
 .index-logo {
   float: right;
-  width: 169px;
+  width: 270px;
   height: 50%;
   border-right: 1px solid #555555;
-  padding: 0 20px;
+  padding: 0 20px 0 0;
   display: inline-block;
-  font-size: 50px;
+  font-size: 40px;
   color: #888888;
 }
 
-@media (max-width: 740px) {
+@media (max-width: 768px) {
   .index-blurb {
     position: absolute;
     height: auto;
@@ -80,10 +73,6 @@ body::after {
 /************** Login/SignUp Modal **************/
 
 
-.modalDialogLogin h3, .modalDialogSignup h3 {
-  margin-top: 0;
-}
-
 .modalDialogLogin, .modalDialogSignup {
   display: none;
   position: fixed;
@@ -96,6 +85,10 @@ body::after {
   opacity:0;
   -webkit-transition: opacity 400ms ease-in;
   pointer-events: none;
+}
+
+.modalDialogLogin h3, .modalDialogSignup h3 {
+  margin-top: 0;
 }
 
 .modalDialogLogin:target, .modalDialogSignup:target {
@@ -133,4 +126,189 @@ body::after {
 .close:hover { 
   background: white;
   opacity: 1;
+}
+
+/************** Header & Menu **************/
+
+.user-page {
+  display: none;
+  height: 100%;
+}
+
+.main-header {
+  background-color: #eeeeee;
+  /*background: url("../images/index-bg.jpg") no-repeat bottom fixed;*/
+  /*background-size: cover;*/
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+
+.header-title {
+  font-family: 'Old Standard TT', serif;
+  font-size: 35px;
+  padding: 10px 10px;
+  vertical-align: middle;
+  color: #bbb;
+  margin: 0;
+  display: inline-block;
+}
+
+.dips {
+  color: #555;
+}
+
+.menu {
+  position: absolute;
+  right: 15px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.fa-bars {
+  padding: 20px 0;
+}
+
+.menu-expanded ul {
+  list-style-type: none;
+  vertical-align: middle;
+  margin: 0;
+  margin-top: 20px;
+
+}
+
+.menu-expanded li {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 15px;
+}
+
+.menu-expanded ul, .menu-expanded li, .menu-expanded li a{
+  vertical-align: middle;
+  height: 50px;
+}
+
+.dropdown {
+  vertical-align: middle;
+  display: none;
+}
+
+.menu-expanded li a:hover {
+  text-decoration: none
+}
+
+.menu-expanded li:hover {
+  border-bottom: 1px solid #13649D;
+}
+
+@media (max-width: 760px) {
+  .menu-expanded {
+    display: none;
+  }
+
+  .dropdown {
+    display: inline-block;
+  }
+}
+
+
+/*********** Grid Of Logs ***********/
+
+.mylogs-title {
+  font-family: 'Old Standard TT', serif;
+
+}
+
+.logs-wrapper {
+  margin-top: 20px;
+}
+
+.blocks {
+  height: 25vw;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+}
+
+.image {
+  background-repeat: no-repeat;
+  background-position: center center fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  transition: margin-top 0.2s;
+}
+
+.image:hover {
+  margin-top: 66px;
+}
+
+
+.deets {
+  padding: 7px 15px;
+  font-size: 20px;
+  background-color: #eeeeee;
+  font-family: 'Old Standard TT', serif;
+  /*border: 1px solid #ddd;*/
+}
+
+.log-date {
+  font-size: 15px;
+  font-family: 'Lato', sans-serif;
+
+}
+
+@media(max-width: 760px) {
+  .row {
+    margin: 0 5px;
+  }
+  .blocks {
+    height: 40vw;
+  }
+}
+
+.divelog-header {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+}
+
+.mylogs-title span {
+  color: #bbb;
+}
+
+.one-log {
+  background-color: #ddd;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-bottom: 20px
+}
+
+.section {
+  border: 1px solid white;
+}
+
+.one-one, .one-two, .two-one, .two-two {
+  height: 150px;
+}
+
+.two-one, .two-two {
+  height: 250px;
+}
+
+.three-one {
+  height: 400px;
+}
+
+.four-one {
+  height: 100px;
+}
+
+.five-one {
+  height: 60px;
 }
