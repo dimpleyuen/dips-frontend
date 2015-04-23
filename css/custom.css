@@ -11,17 +11,19 @@ html, body, .container-fluid {
   background: url("../images/index-bg.jpg") no-repeat center center fixed;
   background-size: cover;
   height: 100%;
-}
-
-/************** Index Page **************/
-
-.index-page {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
   height: 50%;
   width: 100%;
-  background-color: rgba(255,255,255,0.5);
+}
+
+/************** Index Page **************/
+
+.index-page {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255,255,255,0.2);
   font-family: 'Old Standard TT', serif;
 }
 
@@ -44,9 +46,9 @@ html, body, .container-fluid {
 
 .index-logo {
   float: right;
-  width: 270px;
+  width: 300px;
   height: 50%;
-  border-right: 1px solid #555555;
+  border-right: 1px solid black;
   padding: 0 20px 0 0;
   display: inline-block;
   font-size: 40px;
@@ -70,10 +72,19 @@ html, body, .container-fluid {
 
 }
 
+.login-menu a {
+  color: black;
+  text-decoration: underline;
+}
+
+.login-menu a:hover {
+  text-decoration: none;
+}
+
 /************** Login/SignUp Modal **************/
 
 
-.modalDialogLogin, .modalDialogSignup {
+.modalDialogLogin, .modalDialogSignup, .modalDialogNew {
   display: none;
   position: fixed;
   top: 0;
@@ -87,16 +98,16 @@ html, body, .container-fluid {
   pointer-events: none;
 }
 
-.modalDialogLogin h3, .modalDialogSignup h3 {
+.modalDialogLogin h3, .modalDialogSignup h3, .modalDialogNew h3 {
   margin-top: 0;
 }
 
-.modalDialogLogin:target, .modalDialogSignup:target {
+.modalDialogLogin:target, .modalDialogSignup:target, .modalDialogNew:target {
   opacity: 1;
   pointer-events: auto;
 }
 
-.modalDialogLogin > div, .modalDialogSignup > div {
+.modalDialogLogin > div, .modalDialogSignup > div, .modalDialogNew > div {
   font-family: 'Lato', sans-serif;
   text-align: left;
   width: 85%;
@@ -136,11 +147,12 @@ html, body, .container-fluid {
 }
 
 .main-header {
-  background-color: #eeeeee;
-  /*background: url("../images/index-bg.jpg") no-repeat bottom fixed;*/
-  /*background-size: cover;*/
-  border-bottom: 1px solid #eee;
+  padding-top: 20px;
+  /*border-bottom: 4px double black;*/
   position: relative;
+  /*background: url(../images/index-bg.jpg) center center;*/
+  background-color: #FAFAFA;
+  background-size: cover;
 }
 
 .header-title {
@@ -148,7 +160,7 @@ html, body, .container-fluid {
   font-size: 35px;
   padding: 10px 10px;
   vertical-align: middle;
-  color: #bbb;
+  color: #ccc;
   margin: 0;
   display: inline-block;
 }
@@ -187,6 +199,10 @@ html, body, .container-fluid {
   height: 50px;
 }
 
+ul li a:link, ul li a:active, ul li a:hover {
+  text-decoration: none;
+}
+
 .dropdown {
   vertical-align: middle;
   display: none;
@@ -197,7 +213,7 @@ html, body, .container-fluid {
 }
 
 .menu-expanded li:hover {
-  border-bottom: 1px solid #13649D;
+  border-bottom: 2px solid #6EB4FA;
 }
 
 @media (max-width: 760px) {
@@ -208,6 +224,7 @@ html, body, .container-fluid {
   .dropdown {
     display: inline-block;
   }
+
 }
 
 
@@ -215,18 +232,21 @@ html, body, .container-fluid {
 
 .mylogs-title {
   font-family: 'Old Standard TT', serif;
-
+  padding-left: 15px;
 }
 
 .logs-wrapper {
-  margin-top: 20px;
+  padding: 0;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  max-width: 1000px;
 }
 
 .blocks {
-  height: 25vw;
+  height: 22vw;
   margin: 0;
+  margin-bottom: 18px;
   overflow: hidden;
-  padding: 0;
   cursor: pointer;
 }
 
@@ -245,13 +265,13 @@ html, body, .container-fluid {
   margin-top: 66px;
 }
 
-
 .deets {
   padding: 7px 15px;
+  width: 110%;
+  text-align: center;
   font-size: 20px;
   background-color: #eeeeee;
   font-family: 'Old Standard TT', serif;
-  /*border: 1px solid #ddd;*/
 }
 
 .log-date {
@@ -264,51 +284,131 @@ html, body, .container-fluid {
   .row {
     margin: 0 5px;
   }
+  .logs-wrapper {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
   .blocks {
-    height: 40vw;
+    height: 44vw;
+  }
+  .mylogs-title {
+    margin-left: 15px;
+    padding-left: 0;
   }
 }
+
+@media(max-width: 550px) {
+  .search-field {
+    width: 120px !important;
+  }
+}
+
+.profile-wrapper {
+  float: left;
+  width: 20%;
+}
+
+
+/*************Individual Dive Logs*************/
 
 .divelog-header {
   margin: 0;
   padding: 10px;
   width: 100%;
-  background-color: white;
+  background-color: #ddd;
+  display: inline-block;
 }
 
 .mylogs-title span {
   color: #bbb;
 }
 
+.mylogs-title {
+  display: inline-block;
+  font-size: 35px;
+}
+
 .one-log {
-  background-color: #ddd;
+  clear: both;
   padding: 0;
-  border: 1px solid #ddd;
+  border: 1px solid gray;
   border-radius: 5px;
   font-size: 20px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
+}
+
+.arrow-left {
+  display: none;
+  cursor: pointer;
 }
 
 .section {
-  border: 1px solid white;
+  padding: 15px;
+  color: #549CFC;
+  border-radius: 5px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
 }
 
-.one-one, .one-two, .two-one, .two-two {
-  height: 150px;
+.one-one p, .one-two p, .two-one p, .two-two p {
+  border-bottom: 1px solid #ccc;
 }
 
-.two-one, .two-two {
-  height: 250px;
+.section p {
+  font-size: 16px;
+  min-height: 27px;
+  color: black;
 }
 
-.three-one {
-  height: 400px;
+.search-field {
+  display: none;
+  vertical-align: middle;
+  border-radius: 3px;
+  width: 200px;
+  font-size: 17px;
+  position: relative;
+  padding-right: 0;
+  border: transparent;
+  border-bottom: 1px solid #ccc;
+  outline: none;
 }
 
-.four-one {
-  height: 100px;
+.fa-search {
+  display: inline-block !important;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
-.five-one {
-  height: 60px;
+.six-one {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+input {
+  outline: none;
+}
+
+/*new Log*/
+.new-input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
+  outline: none;
+
+}
+
+.page-up {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.page-up a:link, .page-up a:hover {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+
+.triangle {
+  color: #6EB4FA;
 }
