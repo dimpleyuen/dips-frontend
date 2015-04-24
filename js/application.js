@@ -4,12 +4,18 @@ $(document).ready(function() {
   //on page load, run checkAuth function (to determine what page to show)
   checkAuth();
 
+// PROFILE TOGGLE
+  $('.account-link').click(function() {
+    $('.profile').toggle(500);
+  })
+
 // DISPLAY LOGS (ON PAGE LOAD)
   //on page load, run getDisplayLogs (to display blocks)
   getDisplayLogs();
 
   $('.my-logs').click(function() {
     getDisplayLogs();
+    $('.arrow-left').hide(500);
   })
 
 // BACK BUTTON (DISPLAY LOGS) 
@@ -30,6 +36,7 @@ $(document).ready(function() {
       if (response.message === true) {
         checkAuth();
         history.pushState({foo: "bar"}, "", "/");
+        $('.login-username, .login-password').val(""),
         getDisplayLogs();
       }
       else {
@@ -82,11 +89,14 @@ $(document).ready(function() {
     $('.save-log').show();
   })
 
-// UPDATE (SAVE) A LOG
+// PUT (SAVE) A LOG
   $(document).on('click', '.save-log', function() {
     saveLog($(this).attr('value'));
     $('.section').css("color", "#549CFC");
+    $('.section p').attr("contenteditable", "false");
     $('.section p').css("color", "black")
+    $(this).hide();
+    $('.edit-log').show();
   })
 
 // SEARCH  
@@ -275,7 +285,6 @@ $(document).ready(function() {
       },
       dataType: "JSON",
       success: function(response) {
-        console.log(response);
         if (response.status === true) {
           $('.index-bg, #openModalLogin, #openModalSignup').show();
           $('.user-page').hide();
@@ -296,9 +305,9 @@ $(document).ready(function() {
       success: function(response) {
         $('.logs-container').text('');
         $('.logs-container').hide();
-
         if (response.length === 0) {
-          return $('.logs-container').html("<h2 class='no-logs'>No Logs Yet!</h2>");
+          $('.logs-container').html("<h2 class='no-logs'>No Logs Yet!</h2>");
+          return $('.logs-container').fadeIn(500);
         }
 
         response.forEach(function(log) {
@@ -339,8 +348,6 @@ $(document).ready(function() {
       },
       dataType: "JSON",
       success: function(response) {
-        console.log(response);
-
         var date = new Date(response.date);
   
         $('.logs-container').text('');
@@ -417,31 +424,30 @@ $(document).ready(function() {
       },
       data: {
         log: {
-          "date" : $($('.one-log p')[0]).text(),
-          "location" : $($('.one-log p')[1]).text(),
-          "visibility" : $($('.one-log p')[2]).text(),
+          "date" :             $($('.one-log p')[0]).text(),
+          "location" :         $($('.one-log p')[1]).text(),
+          "visibility" :       $($('.one-log p')[2]).text(),
           "bottomTimeToDate" : $($('.one-log p')[3]).text(),
-          "bottomTime" : $($('.one-log p')[4]).text(),
-          "cumulativeTime" : $($('.one-log p')[5]).text(),
-          "surfaceInt" : $($('.one-log p')[6]).text(),
-          "startingPG" : $($('.one-log p')[7]).text(),
-          "endingPG" : $($('.one-log p')[8]).text(),
-          "depth" : $($('.one-log p')[9]).text(),
-          "diveCenter" : $($('.one-log p')[10]).text(),
-          "buddyName" : $($('.one-log p')[11]).text(),
-          "buddyTitle" : $($('.one-log p')[12]).text(),
-          "buddyCert" : $($('.one-log p')[13]).text(),
-          "description" : $($('.one-log p')[14]).text(),
-          "image" : $($('.one-log p')[15]).text(),
-          "keywords" : $($('.one-log p')[16]).text(),
+          "bottomTime" :       $($('.one-log p')[4]).text(),
+          "cumulativeTime" :   $($('.one-log p')[5]).text(),
+          "surfaceInt" :       $($('.one-log p')[6]).text(),
+          "startingPG" :       $($('.one-log p')[7]).text(),
+          "endingPG" :         $($('.one-log p')[8]).text(),
+          "depth" :            $($('.one-log p')[9]).text(),
+          "diveCenter" :       $($('.one-log p')[10]).text(),
+          "buddyName" :        $($('.one-log p')[11]).text(),
+          "buddyTitle" :       $($('.one-log p')[12]).text(),
+          "buddyCert" :        $($('.one-log p')[13]).text(),
+          "description" :      $($('.one-log p')[14]).text(),
+          "image" :            $($('.one-log p')[15]).text(),
+          "keywords" :         $($('.one-log p')[16]).text(),
         }
       },
       dataType: "JSON",
       success: function(response) {
-        console.log(response);
-          $('.section p').attr("contenteditable", "false");
-          $('.save-log').hide();
-          $(".edit-log").show();
+        $('.section p').attr("contenteditable", "false");
+        $('.save-log').hide();
+        $(".edit-log").show();
       }
     }) 
   }
@@ -530,6 +536,22 @@ $(document).ready(function() {
         $('.one-log input').val("");
         getDisplayLogs();
       } 
+    }) 
+  }
+
+// function getLatLong() -- under construction
+  var latLong = {};
+  
+  function getLatLong(placeName) {
+    $.ajax({
+      type: "GET",
+      url: 'http://maps.google.com/maps/api/geocode/json?address=' + placeName,
+
+      dataType: "JSON",
+      success: function(response) {
+        latLong = response.results[0].geometry.location;
+        console.log(latLong);
+      }
     }) 
   }
 
