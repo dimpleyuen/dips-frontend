@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
-// CHECK AUTHENTICATION
+// CHECK AUTHENTICATION (ON PAGE LOAD)
   //on page load, run checkAuth function (to determine what page to show)
   checkAuth();
 
-// DISPLAY LOGS
+// DISPLAY LOGS (ON PAGE LOAD)
   //on page load, run getDisplayLogs (to display blocks)
   getDisplayLogs();
 
@@ -12,13 +12,13 @@ $(document).ready(function() {
     getDisplayLogs();
   })
 
-// ON BACK BUTTON, DISPLAY LOGS 
+// BACK BUTTON (DISPLAY LOGS) 
   $('.arrow-left').click(function() {
     getDisplayLogs();
     $(this).hide(500);
   })
 
-// LOGIN
+// LOGIN ( +DISPLAY LOGS ON SUCCESS)
   //on clicking login link, focus on input field
   $('.login-link').click(function() {
     $('.login-username').focus();
@@ -78,7 +78,7 @@ $(document).ready(function() {
   $(document).on('click', '.edit-log', function() {
     $(this).hide();
     $('.section p').attr("contenteditable", "true");
-    $('.section').css("color", "#bbb");
+    $('.section, .section p').css("color", "#bbb");
     $('.save-log').show();
   })
 
@@ -86,6 +86,7 @@ $(document).ready(function() {
   $(document).on('click', '.save-log', function() {
     saveLog($(this).attr('value'));
     $('.section').css("color", "#549CFC");
+    $('.section p').css("color", "black")
   })
 
 // SEARCH  
@@ -106,6 +107,7 @@ $(document).ready(function() {
     var prompt = confirm('Are you sure you wan\'t to delete this log?');
     if (prompt == true) {
       deleteLog($(this).attr('value'));
+      $('.arrow-left').hide(500);
     }
   })
 
@@ -120,14 +122,14 @@ $(document).ready(function() {
         "<h1 class='divelog-header' style='color:#549CFC'>New Dive" + "<button class='btn btn-default btn-primary add-log' style='float:right' type='button'>ADD</button></h1>" + 
         "<div class='col-xs-12'>" +
           "<div class='col-xs-12 col-sm-6 one-one section'>" +
-            "Date (yy/mm/dd): <input type='text' class='form-control new-input new-input' value='' placeholder=''>" +
-            "Location: <input type='text' class='form-control new-input' value='' placeholder=''>" +
+            "Date (yyyy/mm/dd):* <input type='text' class='form-control new-input new-input' value='' placeholder=''>" +
+            "Location:* <input type='text' class='form-control new-input' value='' placeholder=''>" +
             "Visibility: <input type='text' class='form-control new-input' value='' placeholder=''>" +
            "</div>" +
           "<div class='col-xs-12 col-sm-5 col-sm-offset-1 one-two section'>" +
-            "Bottom Time To Date (mins): <input type='text' class='form-control new-input' value='' placeholder=''>" +
-            "Time This Dive (mins): <input type='text' class='form-control new-input' value='' placeholder=''>" +
-            "Cumulative Time (mins): <input type='text' class='form-control new-input' value='' placeholder=''>" +
+            "Bottom Time To Date (mins):* <input type='text' class='form-control new-input' value='' placeholder=''>" +
+            "Time This Dive (mins):* <input type='text' class='form-control new-input' value='' placeholder=''>" +
+            "Cumulative Time (mins):* <input type='text' class='form-control new-input' value='' placeholder=''>" +
           "</div>" +
         "</div>" +
         "<div class='col-xs-12'>" +
@@ -139,7 +141,7 @@ $(document).ready(function() {
            "</div>" +
           "<div class='col-xs-12 col-sm-5 col-sm-offset-1 two-two section'>" +
             "Dive Center: <input type='text' class='form-control new-input' value='' placeholder=''>" +
-            "Verification: <input type='text' class='form-control new-input' value='' placeholder=''>" + 
+            "Verification:* <input type='text' class='form-control new-input' value='' placeholder=''>" + 
             "Title: <input type='text' class='form-control new-input' value='' placeholder=''>" +
             "Certificate #: <input type='text' class='form-control new-input' value='' placeholder=''>" +
           "</div>" +
@@ -166,7 +168,14 @@ $(document).ready(function() {
 
   $(document).on('click', '.add-log', function() {
     addLog();
+    $('.arrow-left').hide(500);
   })
+
+// PAGE UP
+  $(document).on('click', 'a[href=#top]', function(){
+    $('html, body, .container-fluid, .user-page, .logs-wrapper').animate({scrollTop:0}, 'slow');
+    return false;
+  });
 
 // function checkAuth() || get request to /authenticated
   function checkAuth() {
@@ -178,7 +187,7 @@ $(document).ready(function() {
       },
       dataType: "JSON",
       success: function(response) {
-        console.log('Authentication response: ', response);
+        // console.log('Authentication response: ', response);
 
         if (response.authenticated === true) {
           $('.index-bg, #openModalLogin, #openModalSignup').hide();
@@ -288,6 +297,10 @@ $(document).ready(function() {
         $('.logs-container').text('');
         $('.logs-container').hide();
 
+        if (response.length === 0) {
+          return $('.logs-container').html("<h2 class='no-logs'>No Logs Yet!</h2>");
+        }
+
         response.forEach(function(log) {
           var date = new Date(log.date);
           var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -302,20 +315,21 @@ $(document).ready(function() {
             "</div>"
           );
         });
-
-        $('.logs-container').append(
-          "<div class='col-xs-12' style='text-align: center'>" +
-          "<span class='page-up'>" +
-            "<a href='#top'>&nbsp;&#9650;</a>" +
-          "</span></div>"
-        )
+        if (response.length >= 6) {
+          $('.logs-container').append(
+            "<div class='col-xs-12' style='text-align: center'>" +
+            "<span class='page-up'>" +
+              "<a href='#top'>&nbsp;&#9650;</a>" +
+            "</span></div>"
+          )
+        };
 
         $('.logs-container').fadeIn(500);
       }
     }) 
   }
 
-// function getOneLog()
+// function getOneLog() || get request to /logs/{id}
   function getOneLog(id) {
     $.ajax({
       type: "GET",
@@ -344,14 +358,14 @@ $(document).ready(function() {
             "<h1 class='divelog-header' style='color:#549CFC'>Dive # " + "<button class='btn btn-default btn-primary edit-log' style='float:right' type='button'>EDIT</button>" + "<button class='btn btn-default btn-primary save-log' style='float:right; display:none' type='button' value='" + response._id  + "'>SAVE</button>" + "</h1>" + 
             "<div class='col-xs-12'>" +
               "<div class='col-xs-12 col-sm-6 one-one section'>" +
-                "Date (yy/mm/dd): <p>" + (date.getYear()+1900) + "/" + (date.getMonth()+1) + "/" + date.getDate() + "</p>" +
-                "Location: <p>" + response.location + "</p>" +
+                "Date (yyyy/mm/dd):* <p>" + (date.getYear()+1900) + "/" + (date.getMonth()+1) + "/" + date.getDate() + "</p>" +
+                "Location:* <p>" + response.location + "</p>" +
                 "Visibility: <p>" + response.visibility + "</p>" +
                "</div>" +
               "<div class='col-xs-12 col-sm-5 col-sm-offset-1 one-two section'>" +
-                "Bottom Time To Date (mins): <p>" + response.bottomTimeToDate + "</p>" +
-                "Time This Dive (mins): <p>" + response.bottomTime + "</p>" +
-                "Cumulative Time (mins): <p>" + response.cumulativeTime + "</p>" +
+                "Bottom Time To Date (mins):* <p>" + response.bottomTimeToDate + "</p>" +
+                "Time This Dive (mins):* <p>" + response.bottomTime + "</p>" +
+                "Cumulative Time (mins):* <p>" + response.cumulativeTime + "</p>" +
               "</div>" +
             "</div>" +
             "<div class='col-xs-12'>" +
@@ -363,7 +377,7 @@ $(document).ready(function() {
                "</div>" +
               "<div class='col-xs-12 col-sm-5 col-sm-offset-1 two-two section'>" +
                 "Dive Center: <p>" + response.diveCenter + "</p>" +
-                "Verification: <p>" + response.buddyName + "</p>" + 
+                "Verification:* <p>" + response.buddyName + "</p>" + 
                 "Title: <p>" + response.buddyTitle + "</p>" +
                 "Certificate #: <p>" + response.buddyCert + "</p>" +
               "</div>" +
@@ -393,7 +407,7 @@ $(document).ready(function() {
     }) 
   }
 
-// function saveLog()
+// function saveLog() put request to /logs/{id}
   function saveLog(logID) {
     $.ajax({
       type: "PUT",
@@ -413,7 +427,6 @@ $(document).ready(function() {
           "startingPG" : $($('.one-log p')[7]).text(),
           "endingPG" : $($('.one-log p')[8]).text(),
           "depth" : $($('.one-log p')[9]).text(),
-          // "safetyStop" : $($('.one-log p')[10]).text(),
           "diveCenter" : $($('.one-log p')[10]).text(),
           "buddyName" : $($('.one-log p')[11]).text(),
           "buddyTitle" : $($('.one-log p')[12]).text(),
@@ -433,7 +446,7 @@ $(document).ready(function() {
     }) 
   }
 
-// function searchLogs()
+// function searchLogs() get request to /logs/search/{searchquery}
   function searchLogs() {
     $.ajax({
       type: "GET",
@@ -465,7 +478,7 @@ $(document).ready(function() {
     }) 
   }
 
-// function deleteLog()
+// function deleteLog() delete request to /logs/{id}
   function deleteLog(logID) {
     $.ajax({
       type: "DELETE",
@@ -480,7 +493,7 @@ $(document).ready(function() {
     }) 
   }
 
-// function addLog();
+// function addLog() post request to /logs
   function addLog() {
     $.ajax({
       type: "POST",
@@ -519,11 +532,5 @@ $(document).ready(function() {
       } 
     }) 
   }
-
-//PAGE UP & PAGE DOWN
-  $(document).on('click', 'a[href=#top]', function(){
-    $('html, body, .container-fluid, .user-page, .logs-wrapper').animate({scrollTop:0}, 'slow');
-    return false;
-  });
 
 });
